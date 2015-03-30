@@ -5,7 +5,7 @@ require '../vendor/autoload.php';
 $app = new \Slim\Slim();
 
 $app->get('/',function (){
-	echo "I am groot...";
+	require '../src/view/login.html';
 });
 
 $app->get('/hello/:name', function ($name) {
@@ -13,7 +13,7 @@ $app->get('/hello/:name', function ($name) {
 });
 
 $app->post('/auth',function (){
-	echo "instantiate your controller here and pass the request object to it...";
+	echo "username: ".$_POST('username')." password: ".$_POST('password');
 });
 
 $app->run();
