@@ -1,5 +1,11 @@
 {
+	"autoload":{
+		"psr-4":{
+			"\\Common\\Authentication\\": "src/Common/Authentication"
+		}
+	}
     "require": {
-        "slim/slim": "~2.6"
+        "slim/slim": "~2.6",
+        "guzzle/guzzle": "v3.9.3"
     }
 }
