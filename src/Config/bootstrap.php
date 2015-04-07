@@ -25,12 +25,10 @@ $app->get('/',function (){
 $app->group('/api',function () use ($app){
     $app->post('/auth',function () use ($app){
         $body = $app->request()->getBody();
-        echo $_POST['username'];
-        echo $_POST['password'];
-        echo $body;
+        $jsonObj = json_decode($body);
+        echo "username: ".$jsonObj->{'username'}."<br/>";
+        echo "password: ".$jsonObj->{'password'};
     });
 });
-
-//require file that defined the API.
 
 $app->run();
