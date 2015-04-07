@@ -28,6 +28,9 @@
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
 
+#php server
+webserver
+
 ## File-based project format:
 *.ipr
 *.iws
