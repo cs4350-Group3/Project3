@@ -24,18 +24,33 @@ $app = new \Slim\Slim(
 );
 
 $app->get('/',function (){
-	echo "this is a test!";
+    echo "this is a test!";
 });
 
 $app->group('/api',function () use ($app){
-    $app->post('/auth',function () use ($app){
-        $body = $app->request()->getBody();
-        $jsonObj = json_decode($body);
-        echo "username: ".$jsonObj->{'username'}."<br/>";
-        echo "password: ".$jsonObj->{'password'};
+    $app->post('/auth',function () use ($app) {
+        $authSQLite = new SQLiteAuth();
+        $jsonBody = json_decode($app->request()->getBody());
 
-        $app->response->setStatus(200);
+        if ($authSQLite->authentcate($jsonObj->{'username'}, $jsonObj->{'password'}) {
+            $res = [
+                "code" => "201",
+                "message" => "welcome"
+            ];    
+            $app->response->setStatus(201);
+        } else {
+            $res = [
+                "code" => "401",
+                "message" => "intruder"
+            ];
+            $app->response->setStatus(401);
+        }
+
+        $app->response->setBody(json_encode($res));
+
+        return;
     });
 });
 
 $app->run();
+
