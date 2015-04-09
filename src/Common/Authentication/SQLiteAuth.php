@@ -1,5 +1,5 @@
 <?php
-namespace Authentication;
+namespace Common\Authentication;
 use sqlite3;
 class SQLiteAuth implements IAuthentication
 {
@@ -11,7 +11,7 @@ class SQLiteAuth implements IAuthentication
 		if ($this->password == '') {
 			$this->password = $password;
 		}
-		$db = new SQLite3('../src/Authentication/login.db');
+		$db = new SQLite3('../src/Common/Authentication/login.db');
 		$q = $db->querySingle("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='user';");
 		if ($q === 0){
 			$db->exec("CREATE TABLE user (username VARCHAR, password VARCHAR); INSERT INTO user (username, password) VALUES ('joshuakimble','pass');");
