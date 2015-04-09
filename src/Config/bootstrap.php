@@ -7,16 +7,10 @@ $autoLoader = realpath(
 /** @noinspection PhpIncludeInspection */
 require $autoLoader;
 
-//these headers may or may not be useful
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Max-Age: 1000');
 
-\Slim\Slim::registerAutoloader();
-
-// Load server specific configuration data.  Should
-// check an environment variable load the appropriate
-// server configuration file.
 require 'config.php';
 
 $app = new \Slim\Slim(
@@ -29,21 +23,21 @@ $app->get('/',function (){
 
 $app->group('/api',function () use ($app){
     $app->post('/auth',function () use ($app) {
-        $authSQLite = new SQLiteAuth();
+        $authSQLite = new \Common\Authentication\SQLiteAuth();
         $jsonBody = json_decode($app->request()->getBody());
 
-        if ($authSQLite->authenticate($jsonObj->{'username'}, $jsonObj->{'password'}) {
+        if ($authSQLite->authenticate($jsonBody->{'username'}, $jsonBody->{'password'})) {
             $res = [
                 "code" => "201",
-                "message" => "welcome"
+                "message" => "Welcome"
             ];    
             $app->response->setStatus(201);
         } else {
             $res = [
                 "code" => "401",
-                "message" => "intruder"
+                "message" => "Intruder"
             ];
-            $app->response->setStatus(401);
+            //$app->response->setStatus(401);
         }
 
         $app->response->setBody(json_encode($res));
