@@ -32,7 +32,7 @@ $app->group('/api',function () use ($app){
         $authSQLite = new SQLiteAuth();
         $jsonBody = json_decode($app->request()->getBody());
 
-        if ($authSQLite->authentcate($jsonObj->{'username'}, $jsonObj->{'password'}) {
+        if ($authSQLite->authenticate($jsonObj->{'username'}, $jsonObj->{'password'}) {
             $res = [
                 "code" => "201",
                 "message" => "welcome"
