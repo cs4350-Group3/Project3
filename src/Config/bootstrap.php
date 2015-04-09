@@ -31,10 +31,13 @@ $app->group('/api',function () use ($app){
     $app->post('/auth',function () use ($app){
         $body = $app->request()->getBody();
         $jsonObj = json_decode($body);
-        echo "username: ".$jsonObj->{'username'}."<br/>";
-        echo "password: ".$jsonObj->{'password'};
-
-        $app->response->setStatus(200);
+        //echo "username: ".$jsonObj->{'username'}."<br/>";
+        //echo "password: ".$jsonObj->{'password'};
+        $authSQLite = new SQLiteAuth();
+        if ($authSQLite->authentcate($jsonObj->{'username'}, $jsonObj->{'password'}) == FALSE)
+           $app->response->setStatus(401);
+        else
+           $app->response->setStatus(200);
     });
 });
 
